@@ -162,14 +162,13 @@ Run the `switch_mysql` script to switch between the desired versions:
     switch_mysql
     ```
 
-    You will be prompted to choose a MySQL version (5.6, 5.7, or 8.0). Simply enter the desired version number.
+You will be prompted to choose a MySQL version (5.6, 5.7, or 8.0). Simply enter the desired version number.
 
 ## Conclusion
 
 By following this guide, you can install MySQL 5.6, 5.7, and 8.0 on your system and easily switch between them using the `switch_mysql` script. This method allows for quick version switching and management for development or testing purposes.
 
 If you encounter any issues or have questions, feel free to open an issue or contribute to the repository.
-```
 
 ### Key Features:
 - **Markdown Formatting**: The guide is written in markdown format, perfect for a GitHub `README.md` file.
