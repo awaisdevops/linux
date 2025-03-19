@@ -183,7 +183,7 @@ sudo yum install mod_ssl
 ## Notes
 
 - This setup configures two virtual hosts (`site1` and `site2`) with automatic redirection from HTTP to HTTPS.
-- The SSL certificates are self-signed. For production environments, it is recommended to use CA-signed certificates (e.g., from [Let's Encrypt](https://letsencrypt.org)).
+- The SSL certificates are self-signed. For production environments, it is recommended to use CA-signed certificates.
 - Ensure your DNS settings are correctly configured for `site1.com` and `site2.com`.
 
 ---
