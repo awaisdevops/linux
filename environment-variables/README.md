@@ -146,7 +146,7 @@ Let’s create a simple script and add its directory to `PATH` so that it can be
 Create a script called `welcome`:
 
 ```bash
-echo -e "#!/bin/bash\n\necho 'Welcome to DevOps Bootcamp! User: $USER'" > ~/scripts/welcome
+echo -e "#!/bin/bash\n\necho 'Welcome to my Linux guide! User: $USER'" > ~/scripts/welcome
 chmod +x ~/scripts/welcome
 ```
 
@@ -222,4 +222,3 @@ Here’s a summary of important commands related to environment variables:
 ## Conclusion
 
 Environment variables are essential for managing user configurations, securing sensitive data, and enabling application flexibility across different environments. By using commands like `export`, `echo`, and `source`, you can efficiently configure and manage your environment.
-```
