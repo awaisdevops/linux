@@ -184,6 +184,5 @@ For example:
 ## License
 
 This document is licensed under the MIT License. See the LICENSE file for more details.
-```
 
 This `README.md` provides a comprehensive guide on using SUID, SGID, and Sticky Bit in Linux, detailing their functionality, usage, and examples both in symbolic and octal modes.
