@@ -46,4 +46,3 @@ There are 7 types of files in Linux:
 ### 3. **Execute (x) Permission**
 - **For files**: Allows executing the file, e.g., running scripts, binaries, etc.
 - **For directories**: Allows entering the directory (i.e., using `cd` to change into the directory). A directory with execute permission means you can `cd` into it.
-```
