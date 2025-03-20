@@ -177,8 +177,4 @@ systemctl get-default
 ```
 
 ---
-
-This guide should help you understand and manage **runlevels** in CentOS 6 and **targets** in CentOS 7/8. If you encounter any issues, feel free to consult the official CentOS documentation or seek assistance from the community.
-```
-
-This `README.md` provides a clear and structured format for understanding Linux runlevels and targets, with instructions for key actions, such as switching runlevels/targets and recovering passwords.
+This guide provides a clear and structured format for understanding Linux runlevels and targets, with instructions for key actions, such as switching runlevels/targets and recovering passwords.
