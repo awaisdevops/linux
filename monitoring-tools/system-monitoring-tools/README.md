@@ -1,32 +1,26 @@
-# Performance Monitoring in Linux
+# System Monitoring Tools Guide
 
-Monitoring the performance of key system resources such as CPU, hard disk, RAM, and network is an essential aspect of system administration. This guide explains how to monitor these resources in Linux using various performance monitoring tools and techniques.
+## Process and Daemons or Performance Monitoring
 
-## Processes and Daemons
+We monitor the performance of server resources like CPU, hard disk, RAM, and network, which is why performance monitoring is critical.
 
-In Linux, everything running in RAM is a process, and each process is assigned a unique **PID (Process ID)**. The **PID** is assigned randomly, with roughly 20% of programs having fixed PIDs and the remaining 80% having dynamic PIDs. 
+Every process in RAM has a Process ID (PID). PIDs are assigned randomly by a program called `erandom`. Roughly 20% of processes have fixed PIDs, while the remaining 80% have dynamically assigned PIDs. Up to CentOS 6, `init` was the father of all processes, but starting from CentOS 7/8, `systemd` has taken over this role.
 
-- In CentOS 6, **init** was the parent of all processes.
-- In CentOS 7 and 8, **systemd** serves as the parent of all processes.
+When you run a command like `df -h`, its process is loaded into RAM, performs the task, and then terminates. This is a simple process. However, the process of a service, known as a daemon, runs indefinitely until manually closed (e.g., `httpd`, `mysqld`). Daemons come in two types:
+1. **Application daemon**: Killing the process of application daemons has no effect on the system.
+2. **System daemon**: Killing the process of a system daemon may crash the system (e.g., `init`).
 
-A simple command like `df -h` runs as a process in RAM and gets executed before being terminated. A **daemon**, on the other hand, is a special type of process that runs continuously after it is started (e.g., `httpd`, `mysqld`). Daemons are classified into two types:
-
-1. **Application Daemon**: Terminating an application daemon has no impact on the system.
-2. **System Daemon**: Killing a system daemon process, like `init`, may crash the entire system.
-
-### Process States in Linux
+### State of Processes in Linux
 
 - **R**: Running
-- **S**: Sleeping (process is in passive mode, in RAM but not being processed)
-- **Z**: Zombie/Uninterruptable/Defunct (a dead process residing in RAM waiting for the parent process to be terminated)
-
-Zombie processes are often the result of flawed application or database design. If they cause performance issues, the server must be rebooted after taking downtime.
+- **S**: Sleeping (the process is in RAM but not being processed)
+- **Zombie/Defunct**: A dead process waiting for its parent to terminate. Zombie processes can be cleared by rebooting the server, typically after taking downtime. These processes often result from flawed application or database designs.
 
 ---
 
 ## Performance Monitoring Tools
 
-Linux provides various tools to monitor the performance of server resources like CPU, hard disk, RAM, and network. Some of the commonly used performance monitoring tools are:
+Linux offers a variety of tools to monitor system performance, including CPU, hard disk, RAM, and network:
 
 1. `top`
 2. `ps`
@@ -43,7 +37,7 @@ Linux provides various tools to monitor the performance of server resources like
 13. `tcpdump` (similar to Wireshark, used for network monitoring)
 14. `sar`
 15. `pidstat`
-16. `strace` (shows system calls made by commands, identifying backend processes)
+16. `strace` (shows system calls and processes triggered by a command)
 17. `ipcs`
 18. `lsof`
 19. `htop`
@@ -51,129 +45,124 @@ Linux provides various tools to monitor the performance of server resources like
 
 ---
 
-## Commands to Check Processes and Server Load
+## Commands to Check Processes and Server Resource Load
 
 ### Load on Server Resources
 
-In Linux, "load" refers to the number of processes waiting to be processed by the CPU. You can check the load with several commands:
+Load refers to the number of applications waiting in the queue to be processed by the CPU.
 
-#### `top`
+#### `top` Command
+`top` is similar to the Windows Task Manager. It displays aggregated load across server resources horizontally and the load of each process vertically. Kernel manages process information via the `/proc/` directory, and `top` fetches data from there.
 
-- Equivalent to Windows Task Manager, it shows aggregated load on server resources in a horizontal layout and individual process load in a vertical layout.
-- The `top` command fetches process data from `/proc/` directory, which is cleared upon reboot.
-
+Example to store output:
 ```bash
-top
+top -n 1 > /opt/resource_statistics
 ```
 
-#### Example: Storing Top Command Output
-
+#### Aggregated Load on Server Resources:
 ```bash
-top -n 1 > /opt/resources_statistics
-```
-
-#### Understanding the Top Command Output
-
-Example output from `top`:
-
-```
 top - 13:20:15 up  2:04,  2 users,  load average: 0.03, 0.01, 0.00
-Tasks: 149 total,   1 running, 148 sleeping, 0 stopped, 0 zombie
-%Cpu(s):  1.1 us,  1.5 sy,  0.2 ni, 96.9 id,  0.1 wa,  0.1 hi,  0.1 si,  0.0 st
+Tasks: 149 total,   1 running, 148 sleeping,   0 stopped,   0 zombie
 ```
 
-- **1.1%us**: CPU usage by user processes.
-- **1.5%sy**: CPU usage by system processes.
-- **96.9%id**: Idle CPU time.
-- **0.1%wa**: Time waiting for I/O cycles.
-- **0.1%hi**: Hardware interrupt time.
-- **0.1%si**: Software interrupt time.
+- **1.1%us**: CPU usage by the user
+- **96.9%id**: Idle CPU value
+- **0.1%wa**: CPU waiting for an I/O cycle
+- **0.1%hi**: Hardware interrupt (indicates hardware problems)
+- **0.1%si**: Software interrupt (indicates software issues)
+- **0.0%st**: Software tracing
 
-Example memory usage output:
-
-```
-Mem:   1003020k total,   828524k used,   174496k free,    25028k buffers
-Swap:  1572860k total,        8k used,  1572852k free,   458824k cached
-```
-
-#### Checking RAM and Swap Usage
-
+#### Memory and Swap Information:
 ```bash
-free -m
-```
-
-### Other Useful Commands
-
-- **`uptime`**: Shows how long the server has been running.
-- **`cat /proc/uptime`**: Displays server uptime.
-- **`ps`**: Lists running processes.
-
-Example:
-
-```bash
-ps -aux | less
-ps -ef | grep -i firefox
+Mem: 1003020k total, 828524k used, 174496k free, 25028k buffers
+Swap: 1572860k total, 8k used, 1572852k free, 458824k cached
 ```
 
 ---
 
-## Simple `top` Command Examples
+## 15 Simple `top` Command Examples on Linux to Monitor Processes
 
-Here are some examples of using the `top` command to monitor processes:
+For more information on `top` command usage, see [15 Simple Top Command Examples on Linux](https://www.binarytides.com/linux-top-command/).
 
-- **Sort by CPU usage**: Press `P`
-- **Sort by process ID**: Press `N`
-- **Sort by running time**: Press `T`
-- **Reverse the sorting order**: Press `R`
-- **Highlight sorted column**: Press `b` for background or `x` for bold text.
-- **Change update delay**: Press `d` and specify the interval (default is 3 seconds).
-- **Filter processes**: Press `o` or `O` and use filters (e.g., `COMMAND=apache`).
+**Common Flags for `top` Command**:
+- `P`: Sort processes by CPU usage.
+- `N`: Sort by Process ID.
+- `T`: Sort by running time.
+- `R`: Reverse the sorting order.
+- `b`: Highlight the sorted column background.
+- `x`: Highlight the sorted column with bold text.
+- `d`: Change the update delay.
+- `o`: Filter processes by command name or CPU usage.
 
-Example to display processes of a user:
-
+Example to display all CPU core statistics:
 ```bash
-top -u username
+top -d 1.0 -b | grep cpu
+```
+
+---
+
+## Checking Server Uptime
+
+You can check the uptime of the server using the following commands:
+```bash
+top
+uptime
+cat /proc/uptime
 ```
 
 ---
 
 ## Killing Processes
 
-To terminate processes in Linux, we use the `kill` or `pkill` commands:
+To terminate processes, use the `kill` command with the PID or `pkill` with the program name. By default, `kill` uses signal 15 (SIGTERM) to terminate processes gracefully, but signal 9 (SIGKILL) can be used to forcefully kill a process.
 
-- **`kill <pid>`**: Terminates a process by its PID.
-- **`pkill <process-name>`**: Terminates a process by its name.
-- **`kill -9 <pid>`**: Forcefully terminates a process.
-
-### Common Kill Signals
-
-- **SIGTERM (15)**: Graceful termination (default signal).
-- **SIGKILL (9)**: Forceful termination.
-
-Example:
-
+Examples:
 ```bash
-kill 5364
-pkill firefox
-pkill -9 firefox
+kill -l  # List all signals
+kill <PID>  # Kill a process by PID
+pkill firefox  # Kill all processes named 'firefox'
+pkill -9 firefox  # Forcefully kill 'firefox' processes
 ```
 
 ---
 
-## Fork Bomb (Load Testing)
+## Fork Bombing / Load Testing
 
-A **fork bomb** is a denial-of-service technique that creates a large number of processes to consume system resources, effectively bringing the system down.
-
-Example script for a fork bomb:
-
+A fork bomb script can overload system resources by creating infinite loops of processes:
 ```bash
 :() { :|:& };:
 ```
 
-This script will rapidly spawn processes, consuming all system resources.
+---
+
+## General Steps for Performance Monitoring
+
+### Case #1: High Server Utilization
+1. Check CPU idle value using `top`. If it's 0%, the CPU is fully utilized.
+2. Check RAM and swap usage.
+3. Identify the process causing high resource usage.
+4. Engage the relevant team (e.g., Java app team) to optimize the application.
+
+### Case #2: No Specific Process Found
+If no process is identified, check the disk and network performance:
+- Use `df -h` to check disk space.
+- Use `iostat` and `iometer` to monitor disk performance.
+- Use `tcpdump`, `wireshark`, `ipref`, `nmon`, or `sar` to monitor network load.
+
+### Case #3: Check for Memory Leaks
+Use `valgrind` to check for memory leaks and clear cache and buffers using:
+```bash
+sync; echo 3 > /proc/sys/vm/drop_caches
+```
+
+### Case #4: Hardware Issues
+If no software-related issues are found, check for hardware problems:
+- Use management consoles for component integrity checks.
+- Use `memtest` for RAM checks.
+- Use `i7z` for overall hardware detection.
 
 ---
 
-## Conclusion
+## License
 
-By using these performance monitoring tools and commands, you can effectively manage and monitor server resources in Linux. Whether you're checking the CPU usage, memory consumption, or process management, these tools will help ensure your system is performing optimally.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
