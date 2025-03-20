@@ -78,12 +78,6 @@ Mem: 1003020k total, 828524k used, 174496k free, 25028k buffers
 Swap: 1572860k total, 8k used, 1572852k free, 458824k cached
 ```
 
----
-
-## 15 Simple `top` Command Examples on Linux to Monitor Processes
-
-For more information on `top` command usage, see [15 Simple Top Command Examples on Linux](https://www.binarytides.com/linux-top-command/).
-
 **Common Flags for `top` Command**:
 - `P`: Sort processes by CPU usage.
 - `N`: Sort by Process ID.
