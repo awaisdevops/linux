@@ -285,10 +285,7 @@ batista5:!!:19867:0:99999:7:::
 
 This file contains group information. When a user is created, a group with the same name as the username is created in this file.
 
----
-
 ## License
 MIT License
-```
 
 This `README.md` provides a comprehensive guide to user management, including user and group creation, permissions, user modifications, and more.
