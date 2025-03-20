@@ -12,7 +12,7 @@ To check the current runlevel:
 
 ```bash
 cat /etc/inittab
-runlevel
+runlevel 5
 ```
 
 - Output example: `N 5` (Current runlevel set to 5, with the previous being N)
