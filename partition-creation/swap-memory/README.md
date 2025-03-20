@@ -162,12 +162,6 @@ You can also use a script to list processes using swap:
 
 ```bash
 #!/bin/bash
-# Get current swap usage for all running processes
-# Erik Ljungstrom 27/05/2011
-# Modified by Mikko Rantalainen 2012-08-09
-# Modified by Marc Methot 2014-09-18
-# removed the need for sudo
-
 SUM=0
 OVERALL=0
 for DIR in `find /proc/ -maxdepth 1 -type d -regex "^/proc/[0-9]+"`
