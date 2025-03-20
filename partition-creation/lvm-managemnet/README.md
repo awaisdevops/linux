@@ -215,13 +215,6 @@ Use the following commands to view mappings of PV, VG, and LV:
     vgcfgrestore myvol
     ```
 
----
-
-## How to Take Snapshot of Logical Volume and Restore
-To take a snapshot of an LV and restore it, refer to this [Tecmint guide](https://www.tecmint.com/take-snapshot-of-logical-volume-and-restore-in-lvm/).
-
----
-
 ## LVM Important Configuration Changes
 1. To configure LVM, edit the `/etc/lvm/lvm.conf` file.
 2. Set backup directory:
