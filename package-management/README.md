@@ -325,7 +325,7 @@ To undo a rollback:
 yum history undo <id-to-undo-rollback-to>
 ```
 
-## Source Code Installation / Tarball Installation
+## 3. Source Code Installation / Tarball Installation
 
 To install a package from its source code/tarball, download the package source code, extract and compile it, then install it.
 
