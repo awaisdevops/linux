@@ -160,6 +160,5 @@ Kernel tuning is an important aspect of managing and optimizing Linux systems. B
 This guide is licensed under the [MIT License](https://opensource.org/licenses/MIT). See the [LICENSE](LICENSE) file for more information.
 ```
 
----
 
 This `README.md` file is structured to provide an easy-to-follow guide on kernel tuning, detailing the commands and steps required to manage kernel parameters, and includes a license section at the end.
