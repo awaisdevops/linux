@@ -135,6 +135,5 @@ ssh -i /home/john-cena/Downloads/key -p 2245 root@dambezuma.com
 
 ## License
 MIT License
-```
 
 This `README.md` document covers all the SSH protocol-related tasks, commands, and explanations provided in the guide.
