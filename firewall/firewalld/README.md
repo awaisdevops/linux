@@ -2,7 +2,7 @@
 
 ## Overview
 
-`irewalld` manages firewall rules dynamically and provides a more flexible way to configure firewall settings compared to traditional `iptables`.
+`firewalld` manages firewall rules dynamically and provides a more flexible way to configure firewall settings compared to traditional `iptables`.
 
 ---
 
