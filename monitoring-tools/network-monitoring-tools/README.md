@@ -1,208 +1,210 @@
-# Network Monitoring Tools Guide
+# Network Monitoring Tools
 
-This document provides an overview of various network monitoring tools used to monitor and troubleshoot network and server performance. These tools allow you to check the status of ports, monitor network traffic, analyze packet data, and diagnose server resource utilization issues.
+This guide explains various network monitoring tools that can help with network management and troubleshooting. Below are the tools and commands you can use for effective network monitoring.
 
-## Table of Contents
+## Tools Overview
 
-1. [Network Monitoring Tools](#network-monitoring-tools)
-   - [1. nmap](#1-nmap)
-   - [2. telnet](#2-telnet)
-   - [3. nc](#3-nc)
-   - [4. netstat](#4-netstat)
-   - [5. ss (Socket Statistics)](#5-ss-socket-statistics)
-   - [6. traceroute](#6-traceroute)
-   - [7. tcpdump](#7-tcpdump)
-   - [8. ping](#8-ping)
-   - [9. Other Tools](#9-other-tools)
-   
-2. [Localhost](#localhost)
+You can use the following tools to monitor your network:
 
-3. [Performance Monitoring](#performance-monitoring)
-   - [Case 1: Diagnosing High CPU and RAM Usage](#case-1-diagnosing-high-cpu-and-ram-usage)
-   - [Case 2: Hard Disk and Network Utilization](#case-2-hard-disk-and-network-utilization)
-   - [Case 3: Checking for Memory Leaks](#case-3-checking-for-memory-leaks)
-   - [Case 4: Hardware Fault Diagnosis](#case-4-hardware-fault-diagnosis)
-   
-4. [Additional Monitoring Tools](#additional-monitoring-tools)
-   - [iostat](#iostat)
-   - [pidstat](#pidstat)
-   - [sar](#sar)
-   - [mpstat](#mpstat)
-   - [vmstat](#vmstat)
-   - [strace](#strace)
+1. **nmap**: Used for port scanning and security auditing of local/remote servers or entire networks.
+2. **telnet**: Used to check the status of a port on local/remote servers.
+3. **nc (netcat)**: Similar to telnet, used for checking port status and sharing data between client and server.
+4. **netstat**: Displays network connections, routing tables, and network protocol statistics.
+5. **ss**: A successor to `netstat` for displaying network statistics.
+6. **traceroute**: Traces the full route from the source to the destination.
+7. **tcpdump**: A packet sniffing and analysis tool.
+8. **ping**: Checks if a server is up or not.
 
-5. [License](#license)
+Other network monitoring tools include **Wireshark**, **iperf**, **iptraf**, and **nmon**.
 
 ---
 
-## Network Monitoring Tools
+## 1. nmap
 
-### 1. nmap
-`nmap` is a popular network scanning tool used to check for open ports on local or remote servers and perform security audits.
+`nmap` is used to check open ports on local/remote servers.
 
-**Examples:**
 ```bash
-nmap 127.0.0.1          # Checking open ports locally
-nmap 141.94.138.24      # Checking open ports on a remote server
-nmap 141.94.138.24 -p 22232   # Checking specific port on a remote server
-nmap 192.168.247.0/24   # Checking open ports across a network range
+nmap 127.0.0.1
+# Checking open ports locally on the local server
+nmap 141.94.138.24
+# Checking for open ports on a remote server
+nmap 141.94.138.24 -p 22232
+# Checking for open ports at the specified remote server and port number
+nmap 192.168.247.0/24
+# Finding open ports in the whole network
+ip r l
+# To find your network range
 ```
 
-### 2. telnet
-`telnet` is a simple tool used to check the status of open ports on a local or remote machine.
+---
 
-**Examples:**
+## 2. telnet
+
+`telnet` checks for open ports on local/remote machines.
+
 ```bash
-telnet 127.0.0.1 22     # Checking port 22 locally
-telnet 104.198.1.23 443  # Checking port 443 on a remote server
+telnet 127.0.0.1 22
+# Checking for open ports locally
+telnet 127.0.0.1 80
+# Checking for opened ports locally
+nslookup rolustech.com
+# Resolves the domain name to IP
+telnet 104.198.1.23 80
+# Checking for opened ports on a remote server
 ```
 
-### 3. nc (netcat)
-`nc` (netcat) is similar to `telnet` but also allows for data sharing between a client and server.
+---
 
-**Examples:**
+## 3. nc (Netcat)
+
+`nc` (Netcat) is used to check open ports locally or remotely.
+
 ```bash
-nc 127.0.0.1 22         # Checking port 22 locally
-nc -v 10.0.2.4 1234      # Checking remote port 1234
-nc -zv google.com 443    # Checking port 443 on google.com
+nc 127.0.0.1 22
+# Checking if port 22 is open locally
+nc -v 10.0.2.4 1234
+# Checking if port 1234 is open remotely
+nc -zv google.com 443
+# Checking if port 443 is open remotely by domain
 ```
 
-### 4. netstat
-`netstat` is a command-line tool that displays active network connections and routing information.
+---
 
-**Examples:**
+## 4. netstat
+
+`netstat` displays network connections, routing tables, and various network statistics.
+
 ```bash
-netstat -tulnp google.com     # Checking active connections on google.com
-netstat -tulnp google.com | grep -i 80   # Filtering results for port 80
+netstat -tulnp google.com
+# Displaying port and connection status
+netstat -tulnp google.com | grep -i 80
+# Filter netstat results for port 80
 ```
 
-### 5. ss (Socket Statistics)
-`ss` is a faster, more efficient tool for showing network statistics and socket connections. It’s a successor to `netstat`.
+---
 
-**Example:**
+## 5. ss (Socket Statistics)
+
+`ss` is similar to `netstat`, used for showing network statistics.
+
+---
+
+## 6. ping
+
+`ping` checks if a server is up or not.
+
 ```bash
-ss -tulnp   # Display socket statistics
+ping -c 5 google.com
+# Send 5 ICMP Echo requests
+ping -s 1024 google.com
+# Use 1024-byte ICMP Echo request
+ping -i eth1 8.8.8.8
+# Use a specified NIC interface (eth1)
 ```
 
-### 6. traceroute
-`traceroute` is used to trace the full route from the source to the destination server.
+---
 
-**Example:**
+## 7. traceroute
+
+`traceroute` prints the hops/route to reach a server.
+
 ```bash
 traceroute google.com
+# Trace the route to google.com
 ```
-
-### 7. tcpdump
-`tcpdump` is a packet sniffing and analysis tool that captures network traffic for inspection.
-
-**Example:**
-```bash
-tcpdump -vvv    # Capturing detailed network traffic
-```
-
-### 8. ping
-`ping` is used to check if a server is reachable (i.e., if it is up and responding to requests).
-
-**Examples:**
-```bash
-ping -c 5 google.com   # Sending 5 ICMP echo requests
-ping -i eth1 8.8.8.8   # Specifying NIC interface
-```
-
-### 9. Other Tools
-Other useful network monitoring tools include:
-- `Wireshark`: A network protocol analyzer.
-- `iperf`: A tool for measuring network bandwidth performance.
-- `iptraf`: A real-time network statistics monitoring tool.
-- `nmon`: A performance monitoring tool for Linux.
 
 ---
 
-## Localhost
+## 8. tcpdump
 
-**127.0.0.1** is the loopback address, commonly referred to as `localhost`. It’s used for internal testing on your machine without interacting with the network.
+`tcpdump` is a packet-sniffing tool that captures and analyzes network packets.
+
+```bash
+tcpdump -vvv
+# Run tcpdump with maximum verbosity
+```
 
 ---
 
-## Performance Monitoring
+## 9. iostat
 
-### Case 1: Diagnosing High CPU and RAM Usage
-If a server’s CPU or RAM is at high utilization, you should first check the CPU idle value using the `top` command. If the CPU idle value is 0%, then the load is at 100%. After this, check the RAM usage and swap status to identify which processes are consuming resources.
+`iostat` provides information about system I/O devices and partitions.
 
-**Key steps:**
-1. Check CPU usage and identify processes.
-2. Check RAM and swap space.
-3. Engage relevant teams before killing processes.
-
-### Case 2: Hard Disk and Network Utilization
-If high server utilization is not caused by CPU or RAM, check hard disk integrity and network utilization.
-
-- Use tools like `iostat` and `iometer` for disk performance.
-- Monitor network load with tools like `tcpdump`, `wireshark`, and `iptraf`.
-
-### Case 3: Checking for Memory Leaks
-Memory leaks may cause abnormal resource utilization. Clear cache and buffer memory using the following command:
 ```bash
-sync; echo 3 > /proc/sys/vm/drop_caches
+iostat
+iostat -x -d -p
+# Show partition resource usage
+iostat -x -d -p /dev/sda
+# Execute on a specific partition
+iostat -x -d -p /dev/sda 2
+# Display output every 2 seconds
 ```
-
-- **Buffer**: Temporary storage for data moving between locations.
-- **Cache**: Stores frequently used data for quicker access.
-
-### Case 4: Hardware Fault Diagnosis
-If no software issues are identified, check for faulty hardware components using management consoles or tools like `memtest` for RAM and `i7z` for overall system integrity.
 
 ---
 
-## Additional Monitoring Tools
+## 10. pidstat
 
-### iostat
-`iostat` provides detailed statistics about system input/output devices and performance.
+`pidstat` reports statistics based on process IDs (PIDs).
 
-**Examples:**
 ```bash
-iostat -x -d -p /dev/sda 2 3  # Monitor disk performance every 2 seconds
+apt install sysstat
+pidstat -p ALL
+# Display CPU usage for all processes
+pidstat -p 135
+# Display CPU usage for process 135
+pidstat -C mysql
+# Display CPU usage for processes named 'mysql'
 ```
 
-### pidstat
-`pidstat` provides statistics for individual processes, helping debug performance issues.
+---
 
-**Examples:**
+## 11. sar (System Activity Report)
+
+`sar` is a powerful system performance monitoring tool. It reports system activity.
+
 ```bash
-pidstat -p 135      # Monitor CPU usage for process with ID 135
-pidstat -C mysql    # Monitor CPU usage for MySQL process
+apt-get install sysstat
+sar -u 2 30
+# Displays CPU statistics every 2 seconds, 30 times
+sar -r 1 4
+# Monitor memory usage
+sar -n DEV 1 5
+# Monitor network activity
 ```
 
-### sar
-`sar` (System Activity Report) is used for overall system performance monitoring.
+---
 
-**Examples:**
+## 12. mpstat
+
+`mpstat` shows CPU statistics, helping you track CPU usage per processor.
+
+---
+
+## 13. vmstat
+
+`vmstat` is a performance monitoring tool used to check RAM, cache, buffer usage.
+
 ```bash
-sar -u 2 30       # Monitor CPU usage every 2 seconds for 30 times
-sar -n DEV 1 5    # Monitor network activity
+vmstat
+# General output for system performance
+vmstat -a
+# Display active and inactive memory
+vmstat -s
+# Memory and scheduling statistics
+vmstat -D
+# Display disk statistics
 ```
 
-### mpstat
-`mpstat` provides CPU statistics, showing resource utilization per processor.
+---
 
-**Example:**
-```bash
-mpstat -P ALL 1    # Monitor all CPUs' usage every second
-```
+## 14. strace
 
-### vmstat
-`vmstat` is used to check overall system performance, including memory, swap, and CPU statistics.
-
-**Example:**
-```bash
-vmstat 2 5   # Display statistics every 2 seconds for 5 times
-```
-
-### strace
-`strace` traces system calls and signals for debugging and monitoring.
+`strace` is used to trace system calls and signals for a specific process.
 
 ---
 
 ## License
 
-MIT License. See the [LICENSE](LICENSE) file for more details.
+This guide is licensed under the MIT License. You can freely use, modify, and distribute this guide. See the `LICENSE` file for more details.
+
+This README provides a comprehensive overview of various network monitoring tools that can assist with managing and troubleshooting network-related issues. Each tool has specific commands and use cases to help you monitor your network performance and identify problems.
