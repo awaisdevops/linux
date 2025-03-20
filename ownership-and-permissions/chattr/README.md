@@ -1,36 +1,33 @@
-# Guide to `chattr` Command and ACLs (Advanced Permissions)
+# Guide to `chattr` Command - File/Directory Attributes
 
-This guide explains how to use the `chattr` command to manage file and directory attributes, as well as how to use Access Control Lists (ACLs) for advanced permission management in Linux.
+The `chattr` command allows you to change file or directory attributes in Linux. It is maintained by the kernel and provides ways to modify the behavior of files or directories, offering features beyond traditional permissions.
 
-## File/Directory Attributes: `chattr` Command
+## 1. Immutable Attribute (Prevent Deletion by Root)
 
-The `chattr` command allows us to change file and directory attributes. It is maintained by the Linux kernel and provides a way to modify file behaviors that go beyond traditional file permissions.
+To prevent a file or directory from being deleted, even by the root user, you can make it immutable.
 
-### 1. **Make a File/Directory Immutable (Prevent Deletion by Root)**
-
-You can make a file or directory immutable, meaning it cannot be deleted or modified, even by the root user.
+### Command to make a file or directory immutable:
 
 ```bash
 chattr +i <file-name>
 chattr +i hh
 ```
 
-- `+i` means **immutable**: The file cannot be modified or deleted.
-- If the file/directory doesn't have write (`w`) permission, it cannot be deleted.
-  
-To remove the immutable attribute:
+- `+i` means **immutable**, making the file or directory unchangeable. If the file or directory doesn't have write (`w`) permission, it cannot be deleted.
+
+### Command to remove the immutable attribute:
 
 ```bash
 chattr -i <file-name>
 ```
 
-To check the attributes of a file:
+### Command to check file or directory attributes:
 
 ```bash
 lsattr hh
 ```
 
-**Example output:**
+**Example Output:**
 
 ```bash
 --i--------e- hh
@@ -39,22 +36,26 @@ lsattr hh
 - `i` indicates the **immutable** attribute.
 - `e` indicates an attribute applied by the kernel.
 
-### 2. **Append-Only Attribute**
+## 2. Append-Only Attribute (Allow Only Appending Data)
 
-If you want a file or directory to only allow data to be appended (without deletion or overwriting), use the append-only attribute.
+To allow data to be appended to a file or directory without allowing deletion or overwriting, you can use the append-only attribute.
+
+### Command to make a file or directory append-only:
 
 ```bash
 chattr +a <file-name>
 chattr +a hh
 ```
 
-- `+a` means **append-only**: The file can only have data added, not overwritten or deleted.
+- `+a` means **append-only**: The file can only have data added and cannot be overwritten or deleted.
 
-To remove the append-only attribute:
+### Command to remove the append-only attribute:
 
 ```bash
 chattr -a hh
 ```
+
+---
 
 ## License
 
