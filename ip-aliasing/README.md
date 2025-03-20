@@ -129,11 +129,4 @@ By following this guide, you can easily configure IP aliases on CentOS or simila
 
 ---
 
-## References
-
-- [Create Multiple IP Addresses on One Network Interface - Tecmint](https://www.tecmint.com/create-multiple-ip-addresses-to-one-single-network-interface/)
-```
-
----
-
 This `README.md` file explains the process of IP aliasing on a Linux system, provides examples of configuring multiple IP addresses, and offers troubleshooting steps to verify the configuration.
