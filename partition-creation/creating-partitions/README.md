@@ -259,6 +259,5 @@ No, you cannot unmount the root (`/`) partition to repair it while the system is
 ## License
 
 This guide is released under the MIT License. See the [LICENSE](LICENSE) file for more details.
-```
 
 This `README.md` provides a detailed step-by-step guide for partition creation and management in Linux, covering topics like partition tools, mounting, permissions, UUID, partition types, and file system repair. It includes precautions, examples, and practical tips to avoid errors. 
