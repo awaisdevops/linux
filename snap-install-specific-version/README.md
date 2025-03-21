@@ -86,6 +86,5 @@ This will show the version information and available channels.
 
 You can install specific versions of LXD by specifying the desired channel when using the `snap install` command. Choose the appropriate channel based on your needs and ensure you install the correct version of LXD.
 
-```
 
 This `README.md` provides a structured guide to installing a specific version of LXD using Snap, detailing the available channels and how to install a version of your choice.
