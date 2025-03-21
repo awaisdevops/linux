@@ -1,4 +1,4 @@
-# Having Multiple Elasticsearch Versions at Once
+# Elasticsearch Installation and Version Switcher
 
 This guide provides instructions for installing multiple versions of Elasticsearch on a Linux system and switching between them using a script.
 
