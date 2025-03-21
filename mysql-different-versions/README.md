@@ -1,4 +1,4 @@
-# MySQL Version Switcher
+# MySQL Installation and Version Switcher
 
 This guide provides instructions on how to install and switch between different versions of MySQL (5.6, 5.7, 8.0) on an Ubuntu-based system using a custom shell script.
   
